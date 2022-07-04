@@ -1,0 +1,37 @@
+CREATE DATABASE [CourseJournal];
+
+USE [CourseJournal];
+
+CREATE TABLE [Trainers] (
+[Id] INT IDENTITY(1,1) PRIMARY KEY,
+[Name] VARCHAR(255) NOT NULL,
+[Surname] VARCHAR(255) NOT NULL,
+[Email] VARCHAR(255) UNIQUE NOT NULL,
+[Password] VARCHAR(255) NOT NULL,
+[BirthDate] DATETIME2 NOT NULL
+);
+
+CREATE TABLE [Students] (
+[Id] INT IDENTITY(1,1) PRIMARY KEY,
+[Name] VARCHAR(255) NOT NULL,
+[Surname] VARCHAR(255) NOT NULL,
+[Email] VARCHAR(255) UNIQUE NOT NULL,
+[Password] VARCHAR(255) NOT NULL,
+[BirthDate] DATETIME2 NOT NULL
+);
+
+CREATE TABLE [Courses] (
+[Id] INT IDENTITY(1,1) PRIMARY KEY,
+[Name] VARCHAR(255) NOT NULL,
+[StartDate] DATETIME2 NOT NULL,
+[Trainer] INT FOREIGN KEY([Trainer]) REFERENCES [Trainers]([Id]),
+[PresenceThreshold] INT NOT NULL,
+[HwResultsThreshold] INT NOT NULL,
+[WtResultsThreshold] INT NOT NULL
+);
+
+CREATE TABLE [CourseStudents] (
+[Id] INT IDENTITY(1,1) PRIMARY KEY,
+[CourseId] INT FOREIGN KEY ([CourseId]) REFERENCES [Courses]([Id]),
+[StudentId] INT FOREIGN KEY ([StudentId]) REFERENCES [Students]([Id])
+);
