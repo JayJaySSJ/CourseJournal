@@ -2,7 +2,12 @@
 
 namespace CourseJournal.AdminApp.Client
 {
-    internal class ActionsHandler
+    internal interface IActionsHandler
+    {
+        void ProgramLoop();
+    }
+
+    internal class ActionsHandler : IActionsHandler
     {
         private readonly IConsoleManager _consoleManager;
         private readonly ICliHelper _cliHelper;
@@ -25,8 +30,7 @@ namespace CourseJournal.AdminApp.Client
                     _consoleManager.WriteLine("\nPick number to choose action:");
                     _consoleManager.WriteLine("" +
                         " 0 - exit\n" +
-                        " 1 - print readings\n" +
-                        " 2 - print power readings\n");
+                        " 1 - ");
 
                     var switcher = _cliHelper.GetInt("Your pick");
                     switch (switcher)
@@ -36,7 +40,7 @@ namespace CourseJournal.AdminApp.Client
                             exit = true;
                             break;
                         case 1:
-                            
+
                             break;
                         default:
                             _consoleManager.Clear();

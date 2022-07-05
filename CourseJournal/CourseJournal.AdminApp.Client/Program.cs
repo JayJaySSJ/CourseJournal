@@ -2,7 +2,7 @@
 {
     internal class Program
     {
-        private static ActionsHandler _actionsHandler;
+        private static readonly ActionsHandler _actionsHandler = new ActionsHandler(new ConsoleManager(), new CliHelper(new ConsoleManager()));
 
         static void Main(string[] args)
         {
