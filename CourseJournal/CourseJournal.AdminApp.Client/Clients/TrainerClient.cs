@@ -74,6 +74,7 @@ namespace CourseJournal.AdminApp.Client.Clients
                 return false;
             }
         }
+
         public async Task<List<Trainer>> GetAllAsync()
         {
             try
@@ -96,27 +97,28 @@ namespace CourseJournal.AdminApp.Client.Clients
                 return new List<Trainer>();
             }
         }
-        //private async Task<Trainer> GetTrainer(int id)
-        //{
-        //    try
-        //    {
-        //        var responseBody = await _client.GetAsync($@"{_clientPath}/{id}");
 
-        //        var result = await responseBody.Content.ReadAsStringAsync();
+        private async Task<Trainer> GetTrainer(int id)
+        {
+            try
+            {
+                var responseBody = await _client.GetAsync($@"{_clientPath}/{id}");
 
-        //        if (!responseBody.IsSuccessStatusCode)
-        //        {
-        //            return null;
-        //        }
+                var result = await responseBody.Content.ReadAsStringAsync();
 
-        //        return JsonConvert.DeserializeObject<Trainer>(result);
-        //    }
-        //    catch (HttpRequestException e)
-        //    {
-        //        Console.WriteLine("\nException Caught!");
-        //        Console.WriteLine("Message :{0} ", e.Message);
-        //        return new Trainer();
-        //    }
-        //}
+                if (!responseBody.IsSuccessStatusCode)
+                {
+                    return null;
+                }
+
+                return JsonConvert.DeserializeObject<Trainer>(result);
+            }
+            catch (HttpRequestException e)
+            {
+                Console.WriteLine("\nException Caught!");
+                Console.WriteLine("Message :{0} ", e.Message);
+                return new Trainer();
+            }
+        }
     }
 }
