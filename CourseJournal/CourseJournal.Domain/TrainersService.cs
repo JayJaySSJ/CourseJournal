@@ -1,4 +1,5 @@
 ﻿using CourseJournal.AdminApp.Domain.Models;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace CourseJournal.Domain
@@ -7,6 +8,8 @@ namespace CourseJournal.Domain
     {
         Task<bool> CreateTrainer(Trainer trainer);
         Task<bool> CheckIfExists(string email);
+        Task<List<Trainer>> GetAllAsync();
+        Task<Trainer> GetTrainer(int id);
     }
 
     public class TrainersService : ITrainersService
@@ -28,6 +31,16 @@ namespace CourseJournal.Domain
             var trainer = await _trainersRepository.GetTrainer(email);
 
             return trainer != null;
+        }
+
+        public async Task<List<Trainer>> GetAllAsync()
+        {
+            return await _trainersRepository.GetAllAsync();
+        }
+
+        public async Task<Trainer> GetTrainer(int id)
+        {
+            return await _trainersRepository.GetTrainerById(id);
         }
     }
 }

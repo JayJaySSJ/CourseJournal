@@ -34,5 +34,9 @@ namespace CourseJournal.AdminApp.Server.Controllers
         [HttpGet]
         [Route("")]
         public async Task<List<Trainer>> GetAllAsync() => await _trainersService.GetAllAsync();
+
+        [HttpGet]
+        [Route("{id}")]
+        public async Task<Trainer> GetTrainer(int id) => await _trainersService.GetTrainer(id);
     }
 }
