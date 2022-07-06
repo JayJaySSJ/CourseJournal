@@ -6,13 +6,14 @@ namespace CourseJournal.AdminApp.Client
     internal class Program
     {
         private static readonly ActionsHandler _actionsHandler = new ActionsHandler(
-            new ConsoleManager(), 
+            new ConsoleManager(),
+            new TrainersHandler(
+                new ConsoleManager(), new CliHelper(new ConsoleManager()), new TrainerClient()),
             new CliHelper(
                 new ConsoleManager()), 
             new CoursesHandler(
-                new CoursesClient(), new ConsoleManager(), new CliHelper(new ConsoleManager())),
-            new TrainersHandler(
-                new ConsoleManager(), new CliHelper(new ConsoleManager()), new TrainerClient()));
+                new CoursesClient(), new ConsoleManager(), new CliHelper(new ConsoleManager()))
+            );
 
         static async Task Main(string[] args)
         {

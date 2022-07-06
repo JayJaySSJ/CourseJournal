@@ -55,5 +55,11 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CourseJournal.Domain\CourseJournal.Domain.csproj">
+      <Project>{e2aebac8-e4af-4487-ab14-35146c47e616}</Project>
+      <Name>CourseJournal.Domain</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
