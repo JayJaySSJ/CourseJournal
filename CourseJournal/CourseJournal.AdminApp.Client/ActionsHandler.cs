@@ -1,26 +1,32 @@
-﻿using System;
+﻿using CourseJournal.AdminApp.Client.Clients;
+using CourseJournal.AdminApp.Client.Models;
+using System;
+using System.Threading.Tasks;
 
 namespace CourseJournal.AdminApp.Client
 {
     internal interface IActionsHandler
     {
-        void ProgramLoop();
+        Task ProgramLoop();
     }
 
     internal class ActionsHandler : IActionsHandler
     {
         private readonly IConsoleManager _consoleManager;
         private readonly ICliHelper _cliHelper;
+        private readonly ITrainersHandler _trainersHandler;
+
 
         public ActionsHandler(
             IConsoleManager consoleManager,
-            ICliHelper cliHelper)
+            ICliHelper cliHelper, ITrainersHandler trainersHandler)
         {
             _consoleManager = consoleManager;
             _cliHelper = cliHelper;
+            _trainersHandler = trainersHandler;
         }
 
-        public void ProgramLoop()
+        public async Task ProgramLoop()
         {
             try
             {
@@ -30,7 +36,7 @@ namespace CourseJournal.AdminApp.Client
                     _consoleManager.WriteLine("\nPick number to choose action:");
                     _consoleManager.WriteLine("" +
                         " 0 - exit\n" +
-                        " 1 - ");
+                        " 1 - create trainer");
 
                     var switcher = _cliHelper.GetInt("Your pick");
                     switch (switcher)
@@ -40,7 +46,7 @@ namespace CourseJournal.AdminApp.Client
                             exit = true;
                             break;
                         case 1:
-
+                            await _trainersHandler.CreateTrainer();
                             break;
                         default:
                             _consoleManager.Clear();
@@ -54,5 +60,7 @@ namespace CourseJournal.AdminApp.Client
                 _consoleManager.WriteLine($"ERROR: {ex.Message}");
             }
         }
+
+
     }
 }

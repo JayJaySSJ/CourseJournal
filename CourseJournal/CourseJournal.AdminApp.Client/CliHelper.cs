@@ -10,6 +10,7 @@ namespace CourseJournal.AdminApp.Client
         int GetInt(string message);
         string GetString(string message);
         DateTime GetValidDateTime(string rangePoint);
+        string GetPassword(string message);
     }
 
     internal class CliHelper : ICliHelper
@@ -53,8 +54,8 @@ namespace CourseJournal.AdminApp.Client
             DateTime output;
 
             while (!DateTime.TryParseExact(
-                GetString($"Provide valid {rangePoint} [MM/dd/yyyy hh:mm tt]"),
-                "MM/dd/yyyy hh:mm tt",
+                GetString($"Provide valid {rangePoint} [MM/dd/yyyy]"),
+                "MM/dd/yyyy",
                 CultureInfo.InvariantCulture,
                 DateTimeStyles.None,
                 out output))
@@ -90,6 +91,22 @@ namespace CourseJournal.AdminApp.Client
             }
 
             return boolOut;
+        }
+
+        public string GetPassword(string message)
+        {
+            _consoleManager.Write($"{message}: ");
+            var stringOut = _consoleManager.ReadLine();
+
+            while (string.IsNullOrEmpty(stringOut) || stringOut.Length < 6)
+            {
+                _consoleManager.Clear();
+                _consoleManager.WriteLine($"(!) Invalid string, please try again..\n");
+                _consoleManager.Write($"{message}: ");
+                stringOut = _consoleManager.ReadLine();
+            }
+
+            return stringOut;
         }
     }
 }

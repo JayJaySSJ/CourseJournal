@@ -1,12 +1,15 @@
-﻿namespace CourseJournal.AdminApp.Client
+﻿using CourseJournal.AdminApp.Client.Clients;
+using System.Threading.Tasks;
+
+namespace CourseJournal.AdminApp.Client
 {
     internal class Program
     {
-        private static readonly ActionsHandler _actionsHandler = new ActionsHandler(new ConsoleManager(), new CliHelper(new ConsoleManager()));
+        private static readonly ActionsHandler _actionsHandler = new ActionsHandler(new ConsoleManager(), new CliHelper(new ConsoleManager()), new TrainersHandler(new ConsoleManager(), new CliHelper(new ConsoleManager()), new TrainerClient()));
 
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
-            _actionsHandler.ProgramLoop();
+            await _actionsHandler.ProgramLoop();
         }
     }
 }
