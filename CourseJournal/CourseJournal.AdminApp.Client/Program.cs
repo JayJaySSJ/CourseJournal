@@ -10,7 +10,9 @@ namespace CourseJournal.AdminApp.Client
             new CliHelper(
                 new ConsoleManager()), 
             new CoursesHandler(
-                new CoursesClient(), new ConsoleManager(), new CliHelper(new ConsoleManager())));
+                new CoursesClient(), new ConsoleManager(), new CliHelper(new ConsoleManager())),
+            new TrainersHandler(
+                new ConsoleManager(), new CliHelper(new ConsoleManager()), new TrainerClient()));
 
         static async Task Main(string[] args)
         {

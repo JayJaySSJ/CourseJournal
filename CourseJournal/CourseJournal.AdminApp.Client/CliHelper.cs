@@ -11,6 +11,7 @@ namespace CourseJournal.AdminApp.Client
         int GetIntInRange(string message, int beginRange, int endRange);
         string GetString(string message);
         DateTime GetValidDateTime(string rangePoint);
+        string GetPassword(string message);
     }
 
     internal class CliHelper : ICliHelper
@@ -105,6 +106,22 @@ namespace CourseJournal.AdminApp.Client
             }
 
             return boolOut;
+        }
+
+        public string GetPassword(string message)
+        {
+            _consoleManager.Write($"{message}: ");
+            var stringOut = _consoleManager.ReadLine();
+
+            while (string.IsNullOrEmpty(stringOut) || stringOut.Length < 6)
+            {
+                _consoleManager.Clear();
+                _consoleManager.WriteLine($"(!) Invalid string, please try again..\n");
+                _consoleManager.Write($"{message}: ");
+                stringOut = _consoleManager.ReadLine();
+            }
+
+            return stringOut;
         }
     }
 }
