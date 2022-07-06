@@ -8,6 +8,7 @@ namespace CourseJournal.AdminApp.Client
         bool GetBool(string message);
         ConsoleColor GetConsoleColor(bool switcher, ConsoleColor defaultColor);
         int GetInt(string message);
+        int GetIntInRange(string message, int beginRange, int endRange);
         string GetString(string message);
         DateTime GetValidDateTime(string rangePoint);
     }
@@ -48,13 +49,27 @@ namespace CourseJournal.AdminApp.Client
             return intOut;
         }
 
+        public int GetIntInRange(string message, int beginRange, int endRange)
+        {
+            var result = GetInt(message);
+
+            while (result < beginRange || result > endRange)
+            {
+                _consoleManager.Clear();
+                _consoleManager.WriteLine($"(!) Write number from {beginRange} to {endRange}\n");
+                result = GetInt(message);
+            }
+
+            return result;
+        }
+
         public DateTime GetValidDateTime(string rangePoint)
         {
             DateTime output;
 
             while (!DateTime.TryParseExact(
-                GetString($"Provide valid {rangePoint} [MM/dd/yyyy hh:mm tt]"),
-                "MM/dd/yyyy hh:mm tt",
+                GetString($"Provide valid {rangePoint} [MM/dd/yyyy]"),
+                "MM/dd/yyyy",
                 CultureInfo.InvariantCulture,
                 DateTimeStyles.None,
                 out output))
