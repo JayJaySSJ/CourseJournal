@@ -1,26 +1,29 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace CourseJournal.AdminApp.Client
 {
     internal interface IActionsHandler
     {
-        void ProgramLoop();
+        Task ProgramLoop();
     }
 
     internal class ActionsHandler : IActionsHandler
     {
         private readonly IConsoleManager _consoleManager;
         private readonly ICliHelper _cliHelper;
-
+        private readonly IStudentHandler _studentHandler;
         public ActionsHandler(
             IConsoleManager consoleManager,
-            ICliHelper cliHelper)
+            ICliHelper cliHelper,
+            IStudentHandler studentHandler)
         {
             _consoleManager = consoleManager;
             _cliHelper = cliHelper;
+            _studentHandler = studentHandler;
         }
 
-        public void ProgramLoop()
+        public async Task ProgramLoop()
         {
             try
             {
@@ -30,7 +33,7 @@ namespace CourseJournal.AdminApp.Client
                     _consoleManager.WriteLine("\nPick number to choose action:");
                     _consoleManager.WriteLine("" +
                         " 0 - exit\n" +
-                        " 1 - ");
+                        " 2 - Get Student data");
 
                     var switcher = _cliHelper.GetInt("Your pick");
                     switch (switcher)
@@ -39,8 +42,9 @@ namespace CourseJournal.AdminApp.Client
                             _consoleManager.WriteLine("Adios");
                             exit = true;
                             break;
-                        case 1:
-
+                        case 2:
+                            _consoleManager.WriteLine("Get student data, Name, Surname, Email, Password, itd");
+                            await _studentHandler.AddStudent();
                             break;
                         default:
                             _consoleManager.Clear();
