@@ -12,7 +12,8 @@ namespace CourseJournal.AdminApp.Client
             new CliHelper(
                 new ConsoleManager()), 
             new CoursesHandler(
-                new CoursesClient(), new ConsoleManager(), new CliHelper(new ConsoleManager()))
+                new CoursesClient(), new ConsoleManager(), new CliHelper(new ConsoleManager())),
+            new StudentHandler(new CliHelper(new ConsoleManager()), new StudentsWebApiClient(), new ConsoleManager())
             );
 
         static async Task Main(string[] args)

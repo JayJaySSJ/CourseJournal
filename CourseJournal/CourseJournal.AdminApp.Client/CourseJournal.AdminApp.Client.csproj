@@ -51,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ActionsHandler.cs" />
+    <Compile Include="Clients\StudentsWebApiClient.cs" />
     <Compile Include="Clients\TrainerClient.cs" />
     <Compile Include="Clients\CoursesClient.cs" />
     <Compile Include="CliHelper.cs" />
@@ -62,6 +63,7 @@
     <Compile Include="Models\Student.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StudentHandler.cs" />
     <Compile Include="TrainersHandler.cs" />
   </ItemGroup>
   <ItemGroup>

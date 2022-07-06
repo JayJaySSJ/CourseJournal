@@ -14,6 +14,7 @@ namespace CourseJournal.AdminApp.Client
     {
         private readonly IConsoleManager _consoleManager;
         private readonly ICliHelper _cliHelper;
+        private readonly IStudentHandler _studentHandler;
         private readonly ITrainersHandler _trainersHandler;
         private readonly ICoursesHandler _coursesHandler;
 
@@ -22,12 +23,14 @@ namespace CourseJournal.AdminApp.Client
             IConsoleManager consoleManager,
             ITrainersHandler trainersHandler,
             ICliHelper cliHelper,
-            ICoursesHandler coursesHandler)
+            ICoursesHandler coursesHandler,
+            IStudentHandler studentHandler)
         {
             _consoleManager = consoleManager;
             _cliHelper = cliHelper;
             _trainersHandler = trainersHandler;
             _coursesHandler = coursesHandler;
+            _studentHandler = studentHandler;
         }
 
         public async Task ProgramLoop()
@@ -41,6 +44,7 @@ namespace CourseJournal.AdminApp.Client
                     _consoleManager.WriteLine("" +
                         " 0 - exit\n" +
                         " 1 - Create a new trainer\n" +
+                        " 2 - Get Student data\n" +
                         " 3 - Create a new Course");
 
                     var switcher = _cliHelper.GetInt("Your pick");
@@ -52,6 +56,10 @@ namespace CourseJournal.AdminApp.Client
                             break;
                         case 1:
                             await _trainersHandler.CreateTrainer();
+                            break;
+                        case 2:
+                            _consoleManager.WriteLine("Get student data, Name, Surname, Email, Password, itd");
+                            await _studentHandler.AddStudent();
                             break;
                         case 3:
                             await _coursesHandler.CreateNewAsync();

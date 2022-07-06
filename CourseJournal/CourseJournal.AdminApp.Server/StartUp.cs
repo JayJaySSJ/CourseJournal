@@ -19,7 +19,7 @@ namespace CourseJournal.AdminApp.Server
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}");
-
+            
             appBuilder.UseWebApi(config);
         }
     }
