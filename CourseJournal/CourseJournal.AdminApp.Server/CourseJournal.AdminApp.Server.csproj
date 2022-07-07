@@ -89,6 +89,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\StudentsController.cs" />
+    <Compile Include="Controllers\TrainersController.cs" />
+    <Compile Include="Controllers\CoursesController.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StartUp.cs" />
