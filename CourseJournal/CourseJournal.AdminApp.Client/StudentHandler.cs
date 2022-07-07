@@ -11,6 +11,10 @@ namespace CourseJournal.AdminApp.Client
     internal interface IStudentHandler
     {
         Task AddStudent();
+        Task<List<Student>> GetAllAsync();
+
+        Task<Student> GetStudentById(int id);
+
     }
 
     internal class StudentHandler : IStudentHandler
@@ -36,7 +40,7 @@ namespace CourseJournal.AdminApp.Client
 
             };
 
-            var existing= await _studentsWebApiClient.CheckIfExistEmail(student);
+            var existing = await _studentsWebApiClient.CheckIfExistEmail(student);
             if (existing)
             {
                 Console.WriteLine("Student with this email exist adinng new student impossible, if you add new student choose 2 one more time ");
@@ -46,8 +50,21 @@ namespace CourseJournal.AdminApp.Client
                 await _studentsWebApiClient.AddStudentAsync(student);
                 Console.WriteLine("new student added successfully");
             }
-           
+
         }
+
+        public async Task<List<Student>> GetAllAsync()
+        {
+            return await _studentsWebApiClient.GetAllStudentsAsync();
+
+
+        }
+
+        public async Task<Student> GetStudentById(int id)
+        {
+            return await _studentsWebApiClient.GetByIdAsync(id);
+        }
+
     }
 
 

@@ -14,6 +14,10 @@ namespace CourseJournal.AdminApp.Client.Clients
     {
         Task<bool> AddStudentAsync(Student student);
         Task<bool> CheckIfExistEmail(Student student);
+
+        Task<List<Student>> GetAllStudentsAsync();
+
+        Task<Student> GetByIdAsync(int id);
     }
 
     public class StudentsWebApiClient : IStudentsWebApiClient
@@ -98,6 +102,31 @@ namespace CourseJournal.AdminApp.Client.Clients
                 Console.WriteLine("\nException Caught!");
                 Console.WriteLine("Message :{0} ", e.Message);
                 return new Student();
+            }
+        }
+
+      
+
+        public async Task<List<Student>> GetAllStudentsAsync()
+        {
+            try
+            {
+                var responseBody = await _client.GetAsync($@"{_clientPath}/getallstudents");
+
+                var result = await responseBody.Content.ReadAsStringAsync();
+
+                if (!responseBody.IsSuccessStatusCode)
+                {
+                    return new List<Student>();
+                }
+
+                return JsonConvert.DeserializeObject<List<Student>>(result);
+            }
+            catch (HttpRequestException e)
+            {
+                Console.WriteLine("\nException Caught!");
+                Console.WriteLine("Message :{0} ", e.Message);
+                return new List<Student>();
             }
         }
     }

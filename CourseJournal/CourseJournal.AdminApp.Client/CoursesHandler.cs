@@ -1,6 +1,7 @@
 ﻿using CourseJournal.AdminApp.Client.Clients;
 using CourseJournal.AdminApp.Client.Models;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace CourseJournal.AdminApp.Client
@@ -15,34 +16,59 @@ namespace CourseJournal.AdminApp.Client
         private readonly ICoursesClient _coursesClient;
         private readonly IConsoleManager _consoleManager;
         private readonly ICliHelper _cliHelper;
-
+        private readonly IStudentHandler _studentHandler;
+        private readonly ITrainersHandler _trainersHandler;
         public CoursesHandler(
             ICoursesClient coursesClient,
             IConsoleManager consoleManager,
-            ICliHelper cliHelper)
+            ICliHelper cliHelper, IStudentHandler studentHandler, ITrainersHandler trainersHandler)
         {
             _coursesClient = coursesClient;
             _consoleManager = consoleManager;
             _cliHelper = cliHelper;
+            _studentHandler = studentHandler;
+            _trainersHandler = trainersHandler;
         }
 
         public async Task CreateNewAsync()
         {
             _consoleManager.Clear();
 
-            //if (_trainersHandler.GetAllAsync().Length == 0 || _studentsHandler.GetAllAsync().Length == 0)
-            //{
-            //    _consoleManager.WriteLine("(!) There are no students or trainers in the system. Come back again later...");
+            if (_trainersHandler.GetAllAsync() == null || _studentHandler.GetAllAsync()== null)
+            {
+                _consoleManager.WriteLine("(!) There are no students or trainers in the system. Come back again later...");
 
-            //    return;
-            //}
+                return;
+            }
+
+            foreach (var trainer in await _trainersHandler.GetAllAsync())
+            {
+                _consoleManager.WriteLine($"id {trainer.Id},name {trainer.Name},surname {trainer.Surname}");               
+            }
+            var trainerId=  _cliHelper.GetInt("Get Id Choosen Trainer");
+
+            foreach (var student in await _studentHandler.GetAllAsync())
+            {
+                _consoleManager.WriteLine($"id {student.Id},name {student.Name},surname {student.Surname}");
+            }
+
+
+            List<Student> studentsList = new List<Student>();
+            bool NotaddNew = false;
+            while (NotaddNew==false)
+            {
+                var id= _cliHelper.GetInt("Choose student to Course, get id choosen student");
+                var student= _studentHandler.GetStudentById(id).Result;
+                studentsList.Add(student);
+                NotaddNew = _cliHelper.GetBool("If you want finish adding students write true, if you want continue write false");
+            };
 
             var newCourse = new Course
             {
-                Name = _cliHelper.GetString("name"),
+                Name = _cliHelper.GetString("name of course"),
                 StartDate = _cliHelper.GetValidDateTime("start date"),
-                //TrainerId = _trainersHandler.GetTrainerIdAsync(),
-                //Students = _studentsHandler.GetStudentsAsync(),
+                TrainerId = trainerId,
+                Students = studentsList,
                 PresenceThreshold = GetThreshold("presence"),
                 HwResultsThreshold = GetThreshold("homeworks"),
                 WtResultsThreshold = GetThreshold("tests")

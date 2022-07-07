@@ -12,6 +12,10 @@ namespace CourseJournal.AdminApp.Client.Clients
     {
         Task<bool> CreateTrainer(Trainer trainer);
         Task<bool> CheckIfExists(string email);
+
+        Task<List<Trainer>> GetAllAsync();
+
+        Task<Trainer> GetTrainer(int id);
     }
     public class TrainerClient : ITrainerClient
     {
@@ -98,7 +102,7 @@ namespace CourseJournal.AdminApp.Client.Clients
             }
         }
 
-        private async Task<Trainer> GetTrainer(int id)
+        public async Task<Trainer> GetTrainer(int id)
         {
             try
             {

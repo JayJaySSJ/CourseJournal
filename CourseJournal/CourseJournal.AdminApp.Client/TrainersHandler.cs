@@ -1,5 +1,6 @@
 ﻿using CourseJournal.AdminApp.Client.Clients;
 using CourseJournal.AdminApp.Client.Models;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace CourseJournal.AdminApp.Client
@@ -7,6 +8,9 @@ namespace CourseJournal.AdminApp.Client
     internal interface ITrainersHandler
     {
         Task<bool> CreateTrainer();
+        Task<List<Trainer>> GetAllAsync();
+
+        Task<Trainer> GetTrainerById(int id);
     }
 
     internal class TrainersHandler : ITrainersHandler
@@ -48,5 +52,17 @@ namespace CourseJournal.AdminApp.Client
                 return await _trainerClient.CreateTrainer(newTrainer);
             }
         }
+
+        public async Task<List<Trainer>> GetAllAsync()
+        {
+            return await _trainerClient.GetAllAsync();
+        }
+
+        public async Task<Trainer> GetTrainerById(int id)
+        {
+            return await _trainerClient.GetTrainer(id);
+        }
+
+      
     }
 }
