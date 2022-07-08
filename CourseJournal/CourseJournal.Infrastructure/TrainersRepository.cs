@@ -173,5 +173,50 @@ namespace CourseJournal.Infrastructure
                 return new List<Trainer>();
             }
         }
+
+        public async Task<Trainer> GetTrainerByName(Trainer trainerFromUser)
+        {
+            Trainer trainer = null;
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(_connectionString))
+                {
+                    await connection.OpenAsync();
+
+                    string commandText = "SELECT * FROM [Trainers] WHERE [Name] = @Name";
+
+                    SqlCommand command = new SqlCommand(commandText, connection);
+                    command.Parameters.Add("@Name", SqlDbType.VarChar, 255).Value = trainerFromUser.Name;
+
+                    SqlDataReader dataReader = await command.ExecuteReaderAsync();
+                    await dataReader.ReadAsync();
+
+                    if (dataReader.HasRows)
+                    {
+                        trainer = new Trainer
+                        {
+                            Id = int.Parse(dataReader["Id"].ToString()),
+                            Name = dataReader["Name"].ToString(),
+                            Surname = dataReader["Surname"].ToString(),                         
+                            Password = dataReader["Password"].ToString(),
+                            BirthDate = DateTime.Parse(dataReader["BirthDate"].ToString())
+                        };
+
+                        return trainer;
+                    }
+                }
+            }
+
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                trainer = null;
+            }
+
+            return trainer;
+        }
+
+
     }
 }

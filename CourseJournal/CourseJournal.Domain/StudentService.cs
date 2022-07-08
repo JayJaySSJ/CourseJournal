@@ -40,7 +40,7 @@ namespace CourseJournal.Domain
                 if (student.Email == studentFromBase.Email)
                 {
                     return existedEmail = true;
-                   // break;
+                   
                 }
                 else
                 {

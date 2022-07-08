@@ -10,5 +10,8 @@ namespace CourseJournal.Domain
         Task<Trainer> GetTrainer(string email);
         Task<List<Trainer>> GetAllAsync();
         Task<Trainer> GetTrainerById(int id);
+
+        Task<Trainer> GetTrainerByName(Trainer trainer);
+
     }
 }
