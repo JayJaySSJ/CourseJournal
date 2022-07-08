@@ -1,10 +1,10 @@
-﻿using CourseJournal.Trainer.Client;
+﻿using CourseJournal.TrainerApp.Client;
 using System;
 using System.Globalization;
 
 namespace CourseJournal.TrainerApp.Client
 {
-    internal interface ICliHelper
+    public interface ICliHelper
     {
         bool GetBool(string message);
         ConsoleColor GetConsoleColor(bool switcher, ConsoleColor defaultColor);
@@ -15,7 +15,7 @@ namespace CourseJournal.TrainerApp.Client
         string GetPassword(string message);
     }
 
-    internal class CliHelper : ICliHelper
+    public class CliHelper : ICliHelper
     {
         private readonly IConsoleManager _consoleManager;
 

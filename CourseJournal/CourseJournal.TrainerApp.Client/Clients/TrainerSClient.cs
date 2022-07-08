@@ -1,34 +1,30 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
-
 using CourseJournal.TrainerApp.Client.Models;
-using CourseJournal.AdminApp.Client.Models;
 
 namespace CourseJournal.TrainerApp.Client.Clients
- {
-    internal interface ITrainerClient
+{
+    internal interface ITrainersClient
     {
-        Task<bool> LoginTrainer(TrainerModel trainer);
+        Task<bool> LoginTrainer(Trainer trainer);
+        Task<Trainer> GetTrainerByIdAsync(int id);
     }
 
-    internal class TrainerClient : ITrainerClient
+    internal class TrainerSClient : ITrainersClient
     {
         private readonly HttpClient _httpClient;
         private static string _baseUrl => ConfigurationManager.AppSettings["url"];
-        private static readonly string _clientPath = _baseUrl + "/api/v1/trainer";
+        private static readonly string _clientPath = _baseUrl + "/api/v1/trainers";
 
-        public TrainerClient()
+        public TrainerSClient()
         {
             _httpClient = new HttpClient();
         }
 
-        public async Task<bool> LoginTrainer(TrainerModel trainer)
+        public async Task<bool> LoginTrainer(Trainer trainer)
         {
             try
             {
@@ -51,7 +47,29 @@ namespace CourseJournal.TrainerApp.Client.Clients
                 Console.WriteLine("Message :{0} ", ex.Message);
                 return false;
             }
-        }       
+        }
+
+        public async Task<Trainer> GetTrainerByIdAsync(int id)
+        {
+            try
+            {
+                var responseBody = await _httpClient.GetAsync($@"{_clientPath}/{id}");
+
+                var result = await responseBody.Content.ReadAsStringAsync();
+
+                if (!responseBody.IsSuccessStatusCode)
+                {
+                    return null;
+                }
+
+                return JsonConvert.DeserializeObject<Trainer>(result);
+            }
+            catch (HttpRequestException e)
+            {
+                Console.WriteLine("\nException Caught!");
+                Console.WriteLine("Message :{0} ", e.Message);
+                return new Trainer();
+            }
+        }
     }
 }
-

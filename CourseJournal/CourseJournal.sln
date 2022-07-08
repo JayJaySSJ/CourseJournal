@@ -7,17 +7,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CourseJournal.Infrastructur
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CourseJournal.Domain", "CourseJournal.Domain\CourseJournal.Domain.csproj", "{E2AEBAC8-E4AF-4487-AB14-35146C47E616}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AdminApp.WebApi", "AdminApp.WebApi", "{1416260F-EAC9-494C-B183-12DDEC9F9D4B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "01.CourseJournal.AdminApp.Client", "CourseJournal.AdminApp.Client\01.CourseJournal.AdminApp.Client.csproj", "{1132D9B5-4BF4-450F-A44C-6C22FD488D35}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CourseJournal.AdminApp.Client", "CourseJournal.AdminApp.Client\CourseJournal.AdminApp.Client.csproj", "{1132D9B5-4BF4-450F-A44C-6C22FD488D35}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "00.CourseJournal.Server", "CourseJournal.AdminApp.Server\00.CourseJournal.Server.csproj", "{3B9E557F-E234-4819-BF37-C745BBF3B4AA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CourseJournal.AdminApp.Server", "CourseJournal.AdminApp.Server\CourseJournal.AdminApp.Server.csproj", "{3B9E557F-E234-4819-BF37-C745BBF3B4AA}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TrainerApp.WebAPi", "TrainerApp.WebAPi", "{F562843A-F482-4261-A9EA-9566DF637F5C}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CourseJournal.TrainerApp.Client", "CourseJournal.TrainerApp.Client\CourseJournal.TrainerApp.Client.csproj", "{BD6D6E99-36A2-493A-BDC3-FD72EE31BBE1}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CourseJournal.TrainerApp.Server", "CourseJournal.TrainerApp.Server\CourseJournal.TrainerApp.Server.csproj", "{58BFE6FE-8BDB-4123-91BA-545D1B8E621F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "02.CourseJournal.TrainerApp.Client", "CourseJournal.TrainerApp.Client\02.CourseJournal.TrainerApp.Client.csproj", "{BD6D6E99-36A2-493A-BDC3-FD72EE31BBE1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,19 +39,9 @@ Global
 		{BD6D6E99-36A2-493A-BDC3-FD72EE31BBE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BD6D6E99-36A2-493A-BDC3-FD72EE31BBE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BD6D6E99-36A2-493A-BDC3-FD72EE31BBE1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{58BFE6FE-8BDB-4123-91BA-545D1B8E621F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{58BFE6FE-8BDB-4123-91BA-545D1B8E621F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{58BFE6FE-8BDB-4123-91BA-545D1B8E621F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{58BFE6FE-8BDB-4123-91BA-545D1B8E621F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{1132D9B5-4BF4-450F-A44C-6C22FD488D35} = {1416260F-EAC9-494C-B183-12DDEC9F9D4B}
-		{3B9E557F-E234-4819-BF37-C745BBF3B4AA} = {1416260F-EAC9-494C-B183-12DDEC9F9D4B}
-		{BD6D6E99-36A2-493A-BDC3-FD72EE31BBE1} = {F562843A-F482-4261-A9EA-9566DF637F5C}
-		{58BFE6FE-8BDB-4123-91BA-545D1B8E621F} = {F562843A-F482-4261-A9EA-9566DF637F5C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2DF677E3-1728-43AA-9E1E-6E6B50A1939B}

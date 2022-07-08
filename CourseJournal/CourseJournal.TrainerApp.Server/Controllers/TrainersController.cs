@@ -1,10 +1,6 @@
 ﻿using CourseJournal.AdminApp.Domain.Models;
 using CourseJournal.Domain;
 using CourseJournal.Infrastructure;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
 
@@ -19,8 +15,8 @@ namespace CourseJournal.TrainerApp.Server.Controllers
         {
             _trainersService = new TrainersService(new TrainersRepository());
         }
-        [HttpPost()]
-        [Route("login")]
+        [HttpPost("login")]
+        //[Route()]
         public async Task<bool> CheckIfExists([FromBody] Trainer trainer)
         {
             return await _trainersService.LoginTrainer(trainer);

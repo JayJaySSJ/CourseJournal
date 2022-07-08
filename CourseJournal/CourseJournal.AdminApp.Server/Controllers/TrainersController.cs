@@ -37,6 +37,15 @@ namespace CourseJournal.AdminApp.Server.Controllers
 
         [HttpGet]
         [Route("{id}")]
-        public async Task<Trainer> GetTrainer(int id) => await _trainersService.GetTrainer(id);
+        public async Task<Trainer> GetTrainer(int id) => await _trainersService.GetTrainerByIdAsync(id);
+
+        //----- TrainerApp -----
+
+        [HttpPost()]
+        [Route("login")]
+        public async Task<bool> Login([FromBody] Trainer trainer)
+        {
+            return await _trainersService.LoginTrainer(trainer);
+        }
     }
 }

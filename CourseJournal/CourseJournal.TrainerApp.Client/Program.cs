@@ -1,11 +1,4 @@
-﻿
-
-using CourseJournal.Trainer.Client;
-using CourseJournal.TrainerApp.Client.Clients;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using CourseJournal.TrainerApp.Client.Clients;
 using System.Threading.Tasks;
 
 namespace CourseJournal.TrainerApp.Client
@@ -14,11 +7,11 @@ namespace CourseJournal.TrainerApp.Client
     {
         static async Task Main(string[] args)
         {
-            TrainerClient trainerClient = new TrainerClient();
-            ConsoleManager consoleManager = new ConsoleManager();
-            CliHelper cliHelper = new CliHelper(consoleManager);
-            TrainersHandler trainersHandler = new TrainersHandler(consoleManager, cliHelper, trainerClient);
-            ActionsHandler actionsHandler = new ActionsHandler(consoleManager, trainersHandler, cliHelper);
+            var trainersClient = new TrainerSClient();
+            var consoleManager = new ConsoleManager();
+            var cliHelper = new CliHelper(consoleManager);
+            var coursesHandler = new CoursesHandler(consoleManager, new CoursesClient(), cliHelper);
+            var actionsHandler = new ActionsHandler(consoleManager, cliHelper, trainersClient, coursesHandler);
             await actionsHandler.ProgramLoop();
         }
     }

@@ -1,6 +1,7 @@
 ﻿using CourseJournal.Domain.Interfaces;
 using CourseJournal.Domain.Models;
 using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
@@ -71,6 +72,48 @@ namespace CourseJournal.Infrastructure
             }
 
             return true;
+        }
+
+        public async Task<List<Course>> GetAllAsync()
+        {
+            try
+            {
+                using (var connection = new SqlConnection(_connectionString))
+                {
+                    await connection.OpenAsync();
+
+                    var getAllCommandText = "SELECT * FROM [Courses]";
+
+                    var getAllCommandSql = new SqlCommand(getAllCommandText, connection);
+                    var reader = await getAllCommandSql.ExecuteReaderAsync();
+
+                    var courses = new List<Course>();
+
+                    while (await reader.ReadAsync())
+                    {
+                        var course = new Course
+                        {
+                            Id = int.Parse(reader["Id"].ToString()),
+                            Name = reader["Name"].ToString(),
+                            TrainerId = int.Parse(reader["Trainer"].ToString()),
+                            StartDate = DateTime.Parse(reader["StartDate"].ToString()),
+                            Students = new List<Student>(),                             // TODO: FINISH IT !!!
+                            HwResultsThreshold = int.Parse(reader["HwResultsThreshold"].ToString()),
+                            PresenceThreshold = int.Parse(reader["PresenceThreshold"].ToString()),
+                            WtResultsThreshold = int.Parse(reader["WtResultsThreshold"].ToString())
+                        };
+
+                        courses.Add(course);
+                    }
+
+                    return courses;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"ERROR: {ex.Message}");
+                return new List<Course>();
+            }
         }
     }
 }

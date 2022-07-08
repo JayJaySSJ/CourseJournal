@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CourseJournal.Trainer.Client
+namespace CourseJournal.TrainerApp.Client
 {
     public interface IConsoleManager
     {

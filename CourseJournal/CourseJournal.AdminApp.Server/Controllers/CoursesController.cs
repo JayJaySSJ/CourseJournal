@@ -1,6 +1,7 @@
 ﻿using CourseJournal.Domain;
 using CourseJournal.Domain.Models;
 using CourseJournal.Infrastructure;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web.Http;
 
@@ -19,5 +20,9 @@ namespace CourseJournal.AdminApp.Server.Controllers
         [HttpPost]
         [Route("")]
         public async Task<bool> CreateAsync([FromBody] Course newCourse) => await _coursesService.CreateNewAsync(newCourse);
+
+        [HttpGet]
+        [Route("")]
+        public async Task<List<Course>> GetAllAsync() => await _coursesService.GetAllAsync();
     }
 }

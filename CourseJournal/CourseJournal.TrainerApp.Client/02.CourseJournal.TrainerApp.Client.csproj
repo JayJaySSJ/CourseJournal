@@ -48,22 +48,25 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ActionsHandler.cs" />
-    <Compile Include="Clients\TrainerClient.cs" />
+    <Compile Include="Clients\CoursesClient.cs" />
+    <Compile Include="Clients\TrainerSClient.cs" />
     <Compile Include="CliHelper.cs" />
     <Compile Include="ConsoleManager.cs" />
-    <Compile Include="Models\TrainerModel.cs" />
+    <Compile Include="CoursesHandler.cs" />
+    <Compile Include="Models\Course.cs" />
+    <Compile Include="Models\Student.cs" />
+    <Compile Include="Models\Trainer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TrainersHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CourseJournal.AdminApp.Client\CourseJournal.AdminApp.Client.csproj">
+    <ProjectReference Include="..\CourseJournal.AdminApp.Client\01.CourseJournal.AdminApp.Client.csproj">
       <Project>{1132D9B5-4BF4-450F-A44C-6C22FD488D35}</Project>
-      <Name>CourseJournal.AdminApp.Client</Name>
+      <Name>01.CourseJournal.AdminApp.Client</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
