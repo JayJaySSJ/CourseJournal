@@ -43,13 +43,13 @@ namespace CourseJournal.AdminApp.Client
 
             foreach (var trainer in await _trainersHandler.GetAllAsync())
             {
-                _consoleManager.WriteLine($"id {trainer.Id},name {trainer.Name},surname {trainer.Surname}");               
+                _consoleManager.WriteLine($"Id: {trainer.Id}, name: {trainer.Name}, surname: {trainer.Surname}");               
             }
             var trainerId=  _cliHelper.GetInt("Get Id Choosen Trainer");
 
             foreach (var student in await _studentHandler.GetAllAsync())
             {
-                _consoleManager.WriteLine($"id {student.Id},name {student.Name},surname {student.Surname}");
+                _consoleManager.WriteLine($"Id: {student.Id}, name: {student.Name}, surname: {student.Surname}");
             }
 
 
@@ -58,8 +58,13 @@ namespace CourseJournal.AdminApp.Client
             while (NotaddNew==false)
             {
                 var id= _cliHelper.GetInt("Choose student to Course, get id choosen student");
+
                 var student= _studentHandler.GetStudentById(id).Result;
-                studentsList.Add(student);
+                if (!studentsList.Contains(student))
+                {
+                    studentsList.Add(student);
+                }
+                
                 NotaddNew = _cliHelper.GetBool("If you want finish adding students write true, if you want continue write false");
             };
 
