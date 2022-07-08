@@ -76,7 +76,5 @@ namespace CourseJournal.AdminApp.Client
                 _consoleManager.WriteLine($"ERROR: {ex.Message}");
             }
         }
-
-
     }
 }
