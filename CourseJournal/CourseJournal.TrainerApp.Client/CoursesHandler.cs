@@ -55,7 +55,8 @@ namespace CourseJournal.TrainerApp.Client
 
             if (ids.Contains(id))
             {
-                return trainersCourses[id];
+                return trainersCourses
+                    .FirstOrDefault(x => x.Id == id);
             }
 
             _consoleManager.WriteLine($"(!) There are no courses under given Id [{id}]");

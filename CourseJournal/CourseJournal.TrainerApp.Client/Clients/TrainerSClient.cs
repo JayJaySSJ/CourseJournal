@@ -11,6 +11,7 @@ namespace CourseJournal.TrainerApp.Client.Clients
     {
         Task<bool> LoginTrainer(Trainer trainer);
         Task<Trainer> GetTrainerByIdAsync(int id);
+        Task<Trainer> GetByNameAsync(string name);
     }
 
     internal class TrainerSClient : ITrainersClient
@@ -19,9 +20,13 @@ namespace CourseJournal.TrainerApp.Client.Clients
         private static string _baseUrl => ConfigurationManager.AppSettings["url"];
         private static readonly string _clientPath = _baseUrl + "/api/v1/trainers";
 
+        private readonly ConsoleManager _consoleManager;
+
         public TrainerSClient()
         {
             _httpClient = new HttpClient();
+
+            _consoleManager = new ConsoleManager();
         }
 
         public async Task<bool> LoginTrainer(Trainer trainer)
@@ -43,8 +48,8 @@ namespace CourseJournal.TrainerApp.Client.Clients
             }
             catch (Exception ex)
             {
-                Console.WriteLine("\nException Caught!");
-                Console.WriteLine("Message :{0} ", ex.Message);
+                _consoleManager.WriteLine("\nException Caught!");
+                _consoleManager.WriteLine("Message :{0} " + ex.Message);
                 return false;
             }
         }
@@ -64,11 +69,34 @@ namespace CourseJournal.TrainerApp.Client.Clients
 
                 return JsonConvert.DeserializeObject<Trainer>(result);
             }
-            catch (HttpRequestException e)
+            catch (Exception e)
             {
-                Console.WriteLine("\nException Caught!");
-                Console.WriteLine("Message :{0} ", e.Message);
+                _consoleManager.WriteLine("\nException Caught!");
+                _consoleManager.WriteLine("Message :{0} " + e.Message);
                 return new Trainer();
+            }
+        }
+
+        public async Task<Trainer> GetByNameAsync (string name)
+        {
+            try
+            {
+                var responseBody = await _httpClient.GetAsync($@"{_clientPath}/name/{name}");
+
+                var result = await responseBody.Content.ReadAsStringAsync();
+
+                if (!responseBody.IsSuccessStatusCode)
+                {
+                    return null;
+                }
+
+                return JsonConvert.DeserializeObject<Trainer>(result);
+            }
+            catch (Exception e)
+            {
+                _consoleManager.WriteLine("\nException Caught!");
+                _consoleManager.WriteLine("Message :{0} " + e.Message);
+                return null;
             }
         }
     }

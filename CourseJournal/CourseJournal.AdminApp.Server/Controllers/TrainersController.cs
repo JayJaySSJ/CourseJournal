@@ -47,5 +47,9 @@ namespace CourseJournal.AdminApp.Server.Controllers
         {
             return await _trainersService.LoginTrainer(trainer);
         }
+
+        [HttpGet]
+        [Route("name/{name}")]
+        public async Task<Trainer> GetByNameAsync (string name) => await _trainersService.GetByNameAsync(name);
     }
 }

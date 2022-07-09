@@ -39,6 +39,7 @@ namespace CourseJournal.TrainerApp.Client
                 var exit = false;
                 while (!exit)
                 {
+                    _consoleManager.Clear();
                     _consoleManager.WriteLine("\nPick number to choose action:");
                     _consoleManager.WriteLine("" +
                         " 0 - Exit\n" +
@@ -76,7 +77,6 @@ namespace CourseJournal.TrainerApp.Client
             while (!flag)
             {
                 _consoleManager.Clear();
-
                 _consoleManager.WriteLine("Provide credentials to LogIn:\n");
 
                 inputTrainer = new Trainer()
@@ -95,7 +95,7 @@ namespace CourseJournal.TrainerApp.Client
                 }
             }
 
-            inputTrainer = await _trainersClient.GetTrainerByIdAsync(inputTrainer.Id);  // TODO: always null, id = const 0;
+            inputTrainer = await _trainersClient.GetByNameAsync(inputTrainer.Name);
 
             await TrainersConsole(inputTrainer);
         }
@@ -107,10 +107,10 @@ namespace CourseJournal.TrainerApp.Client
                 var exit = false;
                 while (!exit)
                 {
-                    //_consoleManager.Clear();
+                    _consoleManager.Clear();
                     if(_activeCourse != null)
                     {
-                        _consoleManager.WriteLine($"[Active Course: {_activeCourse.Id}. {_activeCourse.Name}]\n");
+                        _consoleManager.WriteLine($"[Active Course: {_activeCourse.Id}. {_activeCourse.Name}]");
                     }
 
                     _consoleManager.WriteLine("\nPick number to choose action:");

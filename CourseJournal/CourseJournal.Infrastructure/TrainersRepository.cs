@@ -174,7 +174,7 @@ namespace CourseJournal.Infrastructure
             }
         }
 
-        public async Task<Trainer> GetTrainerByName(Trainer trainerFromUser)
+        public async Task<Trainer> GetTrainerByNameAsync(string name)
         {
             Trainer trainer = null;
 
@@ -187,7 +187,7 @@ namespace CourseJournal.Infrastructure
                     string commandText = "SELECT * FROM [Trainers] WHERE [Name] = @Name";
 
                     SqlCommand command = new SqlCommand(commandText, connection);
-                    command.Parameters.Add("@Name", SqlDbType.VarChar, 255).Value = trainerFromUser.Name;
+                    command.Parameters.Add("@Name", SqlDbType.VarChar, 255).Value = name;
 
                     SqlDataReader dataReader = await command.ExecuteReaderAsync();
                     await dataReader.ReadAsync();
@@ -216,7 +216,5 @@ namespace CourseJournal.Infrastructure
 
             return trainer;
         }
-
-
     }
 }

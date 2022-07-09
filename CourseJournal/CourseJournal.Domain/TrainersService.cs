@@ -10,8 +10,8 @@ namespace CourseJournal.Domain
         Task<bool> CheckIfExists(string email);
         Task<List<Trainer>> GetAllAsync();
         Task<Trainer> GetTrainerByIdAsync(int id);
-
         Task<bool> LoginTrainer(Trainer trainer);
+        Task<Trainer> GetByNameAsync(string name);
     }
 
     public class TrainersService : ITrainersService
@@ -50,7 +50,7 @@ namespace CourseJournal.Domain
       
         public async Task<bool> LoginTrainer(Trainer trainer)
         {
-            var trainerToLogin = await _trainersRepository.GetTrainerByName(trainer);
+            var trainerToLogin = await _trainersRepository.GetTrainerByNameAsync(trainer.Name);
 
             if (trainer.Password == trainerToLogin.Password)
             {
@@ -61,5 +61,7 @@ namespace CourseJournal.Domain
 
             return false;
         }
+
+        public async Task<Trainer> GetByNameAsync(string name) => await _trainersRepository.GetTrainerByNameAsync(name);
     }
 }
