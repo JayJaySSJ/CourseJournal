@@ -88,16 +88,17 @@ namespace CourseJournal.Infrastructure
                     var reader = await getAllCommandSql.ExecuteReaderAsync();
 
                     var courses = new List<Course>();
+                    var courseId = 0;
 
                     while (await reader.ReadAsync())
                     {
                         var course = new Course
                         {
-                            Id = int.Parse(reader["Id"].ToString()),
+                            Id = courseId = int.Parse(reader["Id"].ToString()),
                             Name = reader["Name"].ToString(),
                             TrainerId = int.Parse(reader["Trainer"].ToString()),
                             StartDate = DateTime.Parse(reader["StartDate"].ToString()),
-                            Students = new List<Student>(),                             // TODO: FINISH IT !!!
+                            Students = await GetStudentsAsync(courseId),
                             HwResultsThreshold = int.Parse(reader["HwResultsThreshold"].ToString()),
                             PresenceThreshold = int.Parse(reader["PresenceThreshold"].ToString()),
                             WtResultsThreshold = int.Parse(reader["WtResultsThreshold"].ToString())
@@ -113,6 +114,60 @@ namespace CourseJournal.Infrastructure
             {
                 Console.WriteLine($"ERROR: {ex.Message}");
                 return new List<Course>();
+            }
+        }
+
+        public async Task<List<Student>> GetStudentsAsync(int courseId)
+        {
+            try
+            {
+                using (var connection = new SqlConnection(_connectionString))
+                {
+                    await connection.OpenAsync();
+
+                    var getStudentsCommandText = @"
+                        SELECT
+                        [Students].[Id] AS [StudentId],
+                        [Students].[Name],
+                        [Students].[Surname],
+                        [Students].[Email],
+                        [Students].[Password],
+                        [Students].[BirthDate]
+                        FROM [Students]
+                        LEFT JOIN [CourseStudents] ON
+                        [Students].[Id] = [CourseStudents].[StudentId]
+                        WHERE [CourseId] = @CourseId
+                        ;";
+
+                    var getStudentsCommandSql = new SqlCommand(getStudentsCommandText, connection);
+                    getStudentsCommandSql.Parameters.Add("@CourseId", SqlDbType.Int).Value = courseId;
+
+                    var reader = await getStudentsCommandSql.ExecuteReaderAsync();
+
+                    var students = new List<Student>();
+
+                    while (await reader.ReadAsync())
+                    {
+                        var student = new Student
+                        {
+                            Id = int.Parse(reader["StudentId"].ToString()),
+                            Name = reader["Name"].ToString(),
+                            Surname = reader["Surname"].ToString(),
+                            Email = reader["Email"].ToString(),
+                            Password = reader["Password"].ToString(),
+                            BirthDate = DateTime.Parse(reader["BirthDate"].ToString())
+                        };
+
+                        students.Add(student);
+                    }
+
+                    return students;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"ERROR: {e.Message}");
+                return new List<Student>();
             }
         }
     }
