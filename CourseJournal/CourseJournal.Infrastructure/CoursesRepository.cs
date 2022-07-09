@@ -210,7 +210,7 @@ namespace CourseJournal.Infrastructure
                         var addStudentsResultsCommandSql = new SqlCommand(addStudentsResultsCommandText, connection, transaction);
                         addStudentsResultsCommandSql.Parameters.Add("@StudentId", SqlDbType.Int).Value = studentResult.Id;
                         addStudentsResultsCommandSql.Parameters.Add("@TestId", SqlDbType.Int).Value = testId;
-                        addStudentsResultsCommandSql.Parameters.Add("@StudentResults", SqlDbType.Int).Value = studentResult.StudentResult;
+                        addStudentsResultsCommandSql.Parameters.Add("@StudentResult", SqlDbType.Int).Value = studentResult.StudentResult;
 
                         await addStudentsResultsCommandSql.ExecuteNonQueryAsync();
                     }

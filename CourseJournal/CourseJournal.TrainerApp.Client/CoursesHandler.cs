@@ -69,13 +69,16 @@ namespace CourseJournal.TrainerApp.Client
         public async Task<bool> AddTestResults(Course currentCourse)
         {
             var students = currentCourse.Students;
-            var studentResult = _cliHelper.GetInt($"Enter student result\n");
+            
             var testId = _cliHelper.GetInt($"Enter test id\n");
 
             var studentResults = new List<StudentsResults>();
 
             foreach (var student in students)
             {
+                _consoleManager.WriteLine($"[{student.Id}] {student.Name}");
+                var studentResult = _cliHelper.GetInt($"Enter student result\n");
+
                 var result = new StudentsResults()
                 {
                     StudentId = student.Id,
