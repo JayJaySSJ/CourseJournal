@@ -130,7 +130,9 @@ namespace CourseJournal.TrainerApp.Client
                         case 1:
                             _activeCourse = await _coursesHandler.GetTrainersCourse(inputTrainer);
                             break;
-
+                        case 2:
+                            await _coursesHandler.AddTestResults(_activeCourse);
+                            break;
                         default:
                             _consoleManager.Clear();
                             _consoleManager.WriteLine("(!) Please write crorrect number from menu");

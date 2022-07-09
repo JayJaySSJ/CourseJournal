@@ -170,5 +170,61 @@ namespace CourseJournal.Infrastructure
                 return new List<Student>();
             }
         }
+
+        public async Task<bool> AddTestResults(TestResults testResults)
+        {
+            SqlTransaction transaction;
+
+            try
+            {
+                using (var connection = new SqlConnection(_connectionString))
+                {
+                    await connection.OpenAsync();
+                    transaction = connection.BeginTransaction();
+
+                    var createNewCommandText = $@"
+                        INSERT INTO [TestResults] ([TestId], [TestName], [TestDate], [CourseId]) VALUES (@TestId, @TestName, @TestDate, @CourseId)";
+
+                    var createNewCommandSql = new SqlCommand(createNewCommandText, connection, transaction);
+                    createNewCommandSql.Parameters.Add("@TestId", SqlDbType.Int).Value = testResults.TestId;
+                    createNewCommandSql.Parameters.Add("@TestName", SqlDbType.VarChar, 255).Value = testResults.TestName;
+                    createNewCommandSql.Parameters.Add("@TestDate", SqlDbType.DateTime2).Value = testResults.TestDate;
+                    createNewCommandSql.Parameters.Add("@CourseId", SqlDbType.Int).Value = testResults.CourseId;
+
+                    await createNewCommandSql.ExecuteNonQueryAsync();
+
+                    string getLastTestIdCommandText = $"SELECT IDENT_CURRENT('TestResults') AS [TestId];";
+                    var getLastTestIdCommandSql = new SqlCommand(getLastTestIdCommandText, connection, transaction);
+
+                    var reader = await getLastTestIdCommandSql.ExecuteReaderAsync();
+                    await reader.ReadAsync();
+
+                    int testId = int.Parse(reader["TestId"].ToString());
+                    reader.Close();
+
+                    string addStudentsResultsCommandText = @"
+                        INSERT INTO [StudentsResults] ([StudentId], [TestId], [StudentResult]) VALUES (@StudentId, @TestId, @StudentResult)";
+
+                    foreach (var studentResult in testResults.StudentsResults)
+                    {
+                        var addStudentsResultsCommandSql = new SqlCommand(addStudentsResultsCommandText, connection, transaction);
+                        addStudentsResultsCommandSql.Parameters.Add("@StudentId", SqlDbType.Int).Value = studentResult.Id;
+                        addStudentsResultsCommandSql.Parameters.Add("@TestId", SqlDbType.Int).Value = testId;
+                        addStudentsResultsCommandSql.Parameters.Add("@StudentResults", SqlDbType.Int).Value = studentResult.StudentResult;
+
+                        await addStudentsResultsCommandSql.ExecuteNonQueryAsync();
+                    }
+
+                    transaction.Commit();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"ERROR: {ex.Message}");
+                return false;
+            }
+
+            return true;
+        }
     }
 }

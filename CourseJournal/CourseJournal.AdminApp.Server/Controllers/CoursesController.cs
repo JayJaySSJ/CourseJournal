@@ -24,5 +24,9 @@ namespace CourseJournal.AdminApp.Server.Controllers
         [HttpGet]
         [Route("")]
         public async Task<List<Course>> GetAllAsync() => await _coursesService.GetAllAsync();
+
+        [HttpPost]
+        [Route("addTest")]
+        public async Task<bool> AddTestResults([FromBody] TestResults results) => await _coursesService.AddTestResults(results);
     }
 }

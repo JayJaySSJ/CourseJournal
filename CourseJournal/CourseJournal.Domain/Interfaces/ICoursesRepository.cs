@@ -8,5 +8,6 @@ namespace CourseJournal.Domain.Interfaces
     {
         Task<bool> CreateNewAsync(Course newCourse);
         Task<List<Course>> GetAllAsync();
+        Task<bool> AddTestResults(TestResults results);
     }
 }
