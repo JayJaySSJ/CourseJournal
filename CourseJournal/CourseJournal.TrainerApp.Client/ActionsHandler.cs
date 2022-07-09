@@ -108,12 +108,6 @@ namespace CourseJournal.TrainerApp.Client
                 while (!exit)
                 {
                     _consoleManager.Clear();
-                    if(_activeCourse != null)
-                    {
-                        var trainer = await _trainersClient.GetTrainerByIdAsync(_activeCourse.TrainerId);
-
-                        _consoleManager.WriteLine($"[Active Course: {_activeCourse.Name}; Trainer: {trainer.Name} {trainer.Surname}; Start Date: {_activeCourse.StartDate}]");
-                    }
 
                     _consoleManager.WriteLine("\nPick number to choose action:");
                     _consoleManager.WriteLine("" +
@@ -129,6 +123,58 @@ namespace CourseJournal.TrainerApp.Client
                             break;
                         case 1:
                             _activeCourse = await _coursesHandler.GetTrainersCourse(inputTrainer);
+                            await ActiveCourseConsole(inputTrainer);
+                            break;
+
+                        default:
+                            _consoleManager.Clear();
+                            _consoleManager.WriteLine("(!) Please write crorrect number from menu");
+                            break;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                _consoleManager.WriteLine($"ERROR: {ex.Message}");
+            }
+        }
+
+        public async Task ActiveCourseConsole(Trainer inputTrainer)
+        {
+            try
+            {
+                var trainer = new Trainer();
+                var exit = false;
+
+                while (!exit)
+                {
+                    _consoleManager.Clear();
+                    if (_activeCourse != null)
+                    {
+                        trainer = await _trainersClient.GetTrainerByIdAsync(_activeCourse.TrainerId);
+
+                        _consoleManager.WriteLine($"[Active Course: {_activeCourse.Name}; Trainer: {trainer.Name} {trainer.Surname}; Start Date: {_activeCourse.StartDate}]");
+                    }
+
+                    _consoleManager.WriteLine("\nPick number to choose action:");
+                    _consoleManager.WriteLine("" +
+                        " 0 - Log Out\n" +
+                        " 1 - Pick Course\n" +
+                        " 2 - Add Presence\n"
+                        );
+
+                    var switcher = _cliHelper.GetInt("Your pick");
+                    switch (switcher)
+                    {
+                        case 0:
+                            await ProgramLoop();
+                            exit = true;
+                            break;
+                        case 1:
+                            _activeCourse = await _coursesHandler.GetTrainersCourse(inputTrainer);
+                            break;
+                        case 2:
+                            await _coursesHandler.AddPresenceAsync(_activeCourse, trainer);
                             break;
 
                         default:

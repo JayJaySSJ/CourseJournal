@@ -24,5 +24,9 @@ namespace CourseJournal.AdminApp.Server.Controllers
         [HttpGet]
         [Route("")]
         public async Task<List<Course>> GetAllAsync() => await _coursesService.GetAllAsync();
+
+        [HttpPost]
+        [Route("presence")]
+        public async Task<bool> AddPresenceAsync([FromBody] List<CoursePresence> coursePresence) => await _coursesService.AddPresenceAsync(coursePresence);
     }
 }

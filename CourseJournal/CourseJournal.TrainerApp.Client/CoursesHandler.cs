@@ -1,5 +1,6 @@
 ﻿using CourseJournal.TrainerApp.Client.Clients;
 using CourseJournal.TrainerApp.Client.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,6 +10,7 @@ namespace CourseJournal.TrainerApp.Client
     public interface ICoursesHandler
     {
         Task<Course> GetTrainersCourse(Trainer trainer);
+        Task AddPresenceAsync(Course activeCourse, Trainer activeTrainer);
     }
 
     public class CoursesHandler : ICoursesHandler
@@ -61,6 +63,48 @@ namespace CourseJournal.TrainerApp.Client
 
             _consoleManager.WriteLine($"(!) There are no courses under given Id [{id}]");
             return null;
+        }
+
+        public async Task AddPresenceAsync(Course activeCourse, Trainer activeTrainer)
+        {
+            _consoleManager.Clear();
+            _consoleManager.WriteLine($"[Active Course: {activeCourse.Name}; Trainer: {activeTrainer.Name} {activeTrainer.Surname}; Start Date: {activeCourse.StartDate}]\n");
+
+            var lessonDate = _cliHelper.GetValidDateTime("Lesson Date");
+            var presenceList = new List<CoursePresence>();
+
+            _consoleManager.WriteLine("Fill in presence list for the lesson");
+
+            foreach (var student in activeCourse.Students)
+            {
+                _consoleManager.WriteLine($"\n Student: [{student.Id}] {student.Name} {student.Surname}");
+                _consoleManager.Write("Presence: ");
+
+                var presence = _cliHelper.GetPresenceStatus();
+
+                presenceList.Add(new CoursePresence
+                {
+                    CourseId = activeCourse.Id,
+                    StudentId = student.Id,
+                    LessonDate = lessonDate,
+                    PresenceStatus = presence
+                });
+            }
+
+            var result = await _coursesClient.AddPresenceAsync(presenceList);
+
+            var defaultColor = Console.ForegroundColor;
+            Console.ForegroundColor = _cliHelper.GetConsoleColor(result, defaultColor);
+
+            var message = result
+                ? "Presence list added successfully"
+                : "(!) Error while adding presence list";
+            _consoleManager.WriteLine(message);
+
+            Console.ForegroundColor = defaultColor;
+
+            _consoleManager.WriteLine("\nPress any key to continue...");
+            _consoleManager.ReadKey();
         }
     }
 }

@@ -170,5 +170,44 @@ namespace CourseJournal.Infrastructure
                 return new List<Student>();
             }
         }
+
+        public async Task<bool> AddPresenceAsync(List<CoursePresence> coursePresence)
+        {
+            try
+            {
+                using (var connection = new SqlConnection(_connectionString))
+                {
+                    await connection.OpenAsync();
+
+                    var addPresenceCommandText = $@"
+                        UPDATE [CourseStudents]
+                        SET
+                        [PresenceStatus] = @PresenceStatus,
+                        [LessonDate] = @LessonDate
+                        WHERE [CourseId] = @CourseId
+                        AND
+                        [StudentId] = @StudentId
+                        ;";
+
+                    foreach (var presence in coursePresence)
+                    {
+                        var addPresenceCommandSql = new SqlCommand(addPresenceCommandText, connection);
+                        addPresenceCommandSql.Parameters.Add("@PresenceStatus", SqlDbType.Int).Value = presence.PresenceStatus;
+                        addPresenceCommandSql.Parameters.Add("@LessonDate", SqlDbType.DateTime2).Value = presence.LessonDate;
+                        addPresenceCommandSql.Parameters.Add("@CourseId", SqlDbType.Int).Value = presence.CourseId;
+                        addPresenceCommandSql.Parameters.Add("@StudentId", SqlDbType.Int).Value = presence.StudentId;
+
+                        await addPresenceCommandSql.ExecuteNonQueryAsync();
+                    }
+
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"ERROR: {ex.Message}");
+                return false;
+            }
+        }
     }
 }

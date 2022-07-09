@@ -1,4 +1,5 @@
 ﻿using CourseJournal.TrainerApp.Client;
+using CourseJournal.TrainerApp.Client.Models;
 using System;
 using System.Globalization;
 
@@ -13,6 +14,7 @@ namespace CourseJournal.TrainerApp.Client
         string GetString(string message);
         DateTime GetValidDateTime(string rangePoint);
         string GetPassword(string message);
+        PresenceStatus GetPresenceStatus();
     }
 
     public class CliHelper : ICliHelper
@@ -123,6 +125,36 @@ namespace CourseJournal.TrainerApp.Client
             }
 
             return stringOut;
+        }
+
+        public PresenceStatus GetPresenceStatus()
+        {
+            var functions = string.Join(", ", Enum.GetNames(typeof(PresenceStatus)));
+            var input = default(string);
+            var output = new PresenceStatus();
+
+            var success = false;
+            while (!success)
+            {
+                while (!Enum.TryParse(input, out output))
+                {
+                    //_consoleManager.Clear();
+                    input = GetString($"Pick presence status [{functions}]");
+                }
+
+                if (Enum.IsDefined(typeof(PresenceStatus), input))
+                {
+                    success = true;
+                }
+                else
+                {
+                    _consoleManager.Clear();
+                    input = GetString($"(!) Wrong input, try again...\nPick function [{functions}]");
+                    continue;
+                }
+            }
+
+            return output;
         }
     }
 }

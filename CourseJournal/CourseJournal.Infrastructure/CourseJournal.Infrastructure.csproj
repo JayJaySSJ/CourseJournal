@@ -51,6 +51,7 @@
     <Compile Include="StudentsRepository.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="SQL\04. Altering table CourseStudents.sql" />
     <Content Include="SQL\01. Database creation.sql" />
   </ItemGroup>
   <ItemGroup>
