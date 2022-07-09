@@ -9,7 +9,6 @@ namespace CourseJournal.AdminApp.Client
     {
         Task<bool> CreateTrainer();
         Task<List<Trainer>> GetAllAsync();
-
         Task<Trainer> GetTrainerById(int id);
     }
 

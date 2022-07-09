@@ -1,5 +1,6 @@
 ﻿using CourseJournal.Domain.Interfaces;
 using CourseJournal.Domain.Models;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace CourseJournal.Domain
@@ -7,6 +8,7 @@ namespace CourseJournal.Domain
     public interface ICoursesService
     {
         Task<bool> CreateNewAsync(Course newCourse);
+        Task<List<Course>> GetAllAsync();
     }
 
     public class CoursesService : ICoursesService
@@ -22,5 +24,7 @@ namespace CourseJournal.Domain
         {
             return await _coursesRepository.CreateNewAsync(newCourse);
         }
+
+        public async Task<List<Course>> GetAllAsync() => await _coursesRepository.GetAllAsync();
     }
 }

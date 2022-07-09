@@ -9,12 +9,16 @@ namespace CourseJournal.Domain
         Task<bool> CreateTrainer(Trainer trainer);
         Task<bool> CheckIfExists(string email);
         Task<List<Trainer>> GetAllAsync();
-        Task<Trainer> GetTrainer(int id);
+        Task<Trainer> GetTrainerByIdAsync(int id);
+        Task<bool> LoginTrainer(Trainer trainer);
+        Task<Trainer> GetByNameAsync(string name);
     }
 
     public class TrainersService : ITrainersService
     {
         private readonly ITrainersRepository _trainersRepository;
+
+        private static Trainer _loggedTrainer = null;
 
         public TrainersService(ITrainersRepository trainersRepository)
         {
@@ -38,9 +42,26 @@ namespace CourseJournal.Domain
             return await _trainersRepository.GetAllAsync();
         }
 
-        public async Task<Trainer> GetTrainer(int id)
+        public async Task<Trainer> GetTrainerByIdAsync(int id)
         {
             return await _trainersRepository.GetTrainerById(id);
         }
+
+      
+        public async Task<bool> LoginTrainer(Trainer trainer)
+        {
+            var trainerToLogin = await _trainersRepository.GetTrainerByNameAsync(trainer.Name);
+
+            if (trainer.Password == trainerToLogin.Password)
+            {
+                _loggedTrainer = await GetTrainerByIdAsync(trainer.Id);
+
+                return true;
+            }
+
+            return false;
+        }
+
+        public async Task<Trainer> GetByNameAsync(string name) => await _trainersRepository.GetTrainerByNameAsync(name);
     }
 }

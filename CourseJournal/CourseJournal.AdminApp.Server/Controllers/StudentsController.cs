@@ -19,6 +19,7 @@ namespace CourseJournal.AdminApp.Server.Controllers
         {
             _studentService = new StudentService(new StudentsRepository());
         }
+
         [HttpPost]
         [Route("create")]
         public async Task<bool> Create([FromBody] Student student)

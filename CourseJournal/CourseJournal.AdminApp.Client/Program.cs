@@ -5,9 +5,6 @@ namespace CourseJournal.AdminApp.Client
 {
     internal class Program
     {
-        
-      
-
         static async Task Main(string[] args)
         {
             ConsoleManager consoleManager = new ConsoleManager();
@@ -20,7 +17,6 @@ namespace CourseJournal.AdminApp.Client
             CoursesHandler coursesHandler = new CoursesHandler(coursesClient, consoleManager, cliHelper, studentHandler, trainersHandler);
             ActionsHandler actionsHandler = new ActionsHandler(consoleManager, trainersHandler, cliHelper, coursesHandler, studentHandler);
             await actionsHandler.ProgramLoop();
-        }
-     
+        }    
     }
 }

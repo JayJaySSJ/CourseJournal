@@ -3,9 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace CourseJournal.AdminApp.Client.Clients
@@ -13,6 +11,7 @@ namespace CourseJournal.AdminApp.Client.Clients
     public interface IStudentsWebApiClient
     {
         Task<bool> AddStudentAsync(Student student);
+
         Task<bool> CheckIfExistEmail(Student student);
 
         Task<List<Student>> GetAllStudentsAsync();

@@ -57,7 +57,6 @@ namespace CourseJournal.AdminApp.Client
         {
             return await _studentsWebApiClient.GetAllStudentsAsync();
 
-
         }
 
         public async Task<Student> GetStudentById(int id)
