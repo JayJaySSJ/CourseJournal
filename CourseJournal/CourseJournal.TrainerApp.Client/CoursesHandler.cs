@@ -10,6 +10,7 @@ namespace CourseJournal.TrainerApp.Client
     public interface ICoursesHandler
     {
         Task<Course> GetTrainersCourse(Trainer trainer);
+        Task<bool> AddTestResults(Course currentCourse);
         Task AddPresenceAsync(Course activeCourse, Trainer activeTrainer);
     }
 
@@ -63,6 +64,40 @@ namespace CourseJournal.TrainerApp.Client
 
             _consoleManager.WriteLine($"(!) There are no courses under given Id [{id}]");
             return null;
+        }
+
+        public async Task<bool> AddTestResults(Course currentCourse)
+        {
+            var students = currentCourse.Students;
+            var studentResult = _cliHelper.GetInt($"Enter student result\n");
+            var testId = _cliHelper.GetInt($"Enter test id\n");
+
+            var studentResults = new List<StudentsResults>();
+
+            foreach (var student in students)
+            {
+                var result = new StudentsResults()
+                {
+                    StudentId = student.Id,
+                    TestId = testId,
+                    StudentResult = studentResult
+                };
+
+                studentResults.Add(result);
+            }
+
+            var results = new TestResults
+            {
+                TestId = testId,
+                TestName = _cliHelper.GetString($"Enter test name\n"),
+                TestDate = _cliHelper.GetValidDateTime($"Enter date of the test\n"),
+                CourseId = currentCourse.Id,
+                StudentsResults = studentResults
+            };
+
+            await _coursesClient.AddTestResults(results);
+
+            return true;
         }
 
         public async Task AddPresenceAsync(Course activeCourse, Trainer activeTrainer)

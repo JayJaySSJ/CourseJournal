@@ -46,6 +46,8 @@
   <ItemGroup>
     <Compile Include="Interfaces\IStudentsRepository.cs" />
     <Compile Include="Interfaces\ITrainersRepository.cs" />
+    <Compile Include="Models\StudentsResults.cs" />
+    <Compile Include="Models\TestResults.cs" />
     <Compile Include="Models\CoursePresence.cs" />
     <Compile Include="Models\Trainer.cs" />
     <Compile Include="CoursesService.cs" />

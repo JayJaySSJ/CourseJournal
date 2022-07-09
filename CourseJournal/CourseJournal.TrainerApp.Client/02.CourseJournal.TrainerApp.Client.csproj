@@ -56,6 +56,8 @@
     <Compile Include="Models\Course.cs" />
     <Compile Include="Models\CoursePresence.cs" />
     <Compile Include="Models\Student.cs" />
+    <Compile Include="Models\StudentsResults.cs" />
+    <Compile Include="Models\TestResults.cs" />
     <Compile Include="Models\Trainer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

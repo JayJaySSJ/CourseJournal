@@ -160,7 +160,8 @@ namespace CourseJournal.TrainerApp.Client
                     _consoleManager.WriteLine("" +
                         " 0 - Log Out\n" +
                         " 1 - Pick Course\n" +
-                        " 2 - Add Presence\n"
+                        " 2 - Add Presence\n" +
+                        " 3 - Add Test Results\n"
                         );
 
                     var switcher = _cliHelper.GetInt("Your pick");
@@ -175,6 +176,9 @@ namespace CourseJournal.TrainerApp.Client
                             break;
                         case 2:
                             await _coursesHandler.AddPresenceAsync(_activeCourse, trainer);
+                            break;
+                        case 3:
+                            await _coursesHandler.AddTestResults(_activeCourse);
                             break;
 
                         default:

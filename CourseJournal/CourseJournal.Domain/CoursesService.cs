@@ -9,6 +9,7 @@ namespace CourseJournal.Domain
     {
         Task<bool> CreateNewAsync(Course newCourse);
         Task<List<Course>> GetAllAsync();
+        Task<bool> AddTestResults(TestResults results);
         Task<bool> AddPresenceAsync(List<CoursePresence> coursePresence);
     }
 
@@ -27,6 +28,11 @@ namespace CourseJournal.Domain
         }
 
         public async Task<List<Course>> GetAllAsync() => await _coursesRepository.GetAllAsync();
+
+        public async Task<bool> AddTestResults(TestResults results)
+        {
+            return await _coursesRepository.AddTestResults(results);
+        }
 
         public async Task<bool> AddPresenceAsync(List<CoursePresence> coursePresence) => await _coursesRepository.AddPresenceAsync(coursePresence);
     }

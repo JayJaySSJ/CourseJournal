@@ -11,6 +11,7 @@ namespace CourseJournal.TrainerApp.Client.Clients
     public interface ICoursesClient
     {
         Task<List<Course>> GetAllAsync();
+        Task<bool> AddTestResults(TestResults results);
         Task<bool> AddPresenceAsync(List<CoursePresence> presenceList);
     }
 
@@ -48,6 +49,31 @@ namespace CourseJournal.TrainerApp.Client.Clients
                 _consoleManager.WriteLine("\nException Caught!");
                 _consoleManager.WriteLine("Message :{0} " + e.Message);
                 return new List<Course>();
+            }
+        }
+
+        public async Task<bool> AddTestResults(TestResults results)
+        {
+            try
+            {
+                var content = new StringContent(JsonConvert.SerializeObject(results), System.Text.Encoding.UTF8, "application/json");
+
+                var responseBody = await _httpClient.PostAsync($@"{_clientPath}/addTest", content);
+
+                var result = await responseBody.Content.ReadAsStringAsync();
+
+                if (!responseBody.IsSuccessStatusCode)
+                {
+                    return false;
+                }
+
+                return bool.Parse(result);
+            }
+            catch (HttpRequestException e)
+            {
+                _consoleManager.WriteLine("\nException Caught!");
+                _consoleManager.WriteLine("Message :{0} " + e.Message);
+                return false;
             }
         }
 
