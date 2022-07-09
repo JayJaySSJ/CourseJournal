@@ -110,7 +110,9 @@ namespace CourseJournal.TrainerApp.Client
                     _consoleManager.Clear();
                     if(_activeCourse != null)
                     {
-                        _consoleManager.WriteLine($"[Active Course: {_activeCourse.Id}. {_activeCourse.Name}]");
+                        var trainer = await _trainersClient.GetTrainerByIdAsync(_activeCourse.TrainerId);
+
+                        _consoleManager.WriteLine($"[Active Course: {_activeCourse.Name}; Trainer: {trainer.Name} {trainer.Surname}; Start Date: {_activeCourse.StartDate}]");
                     }
 
                     _consoleManager.WriteLine("\nPick number to choose action:");
