@@ -9,6 +9,8 @@ namespace CourseJournal.TrainerApp.Client
     public interface ICoursesHandler
     {
         Task<Course> GetTrainersCourse(Trainer trainer);
+        Task<bool> AddHomeworkReuslt(Course currentCourse);
+
     }
 
     public class CoursesHandler : ICoursesHandler
@@ -44,7 +46,7 @@ namespace CourseJournal.TrainerApp.Client
 
             var ids = new List<int>();
 
-            foreach(var course in trainersCourses)
+            foreach (var course in trainersCourses)
             {
                 ids.Add(course.Id);
 
@@ -61,6 +63,34 @@ namespace CourseJournal.TrainerApp.Client
 
             _consoleManager.WriteLine($"(!) There are no courses under given Id [{id}]");
             return null;
+        }
+
+        public async Task<bool> AddHomeworkReuslt(Course currentCourse)
+        {
+            var students=currentCourse.Students;
+
+            var courses =await _coursesClient.GetAllAsync();
+            foreach (var course in courses)
+            {
+               _consoleManager.WriteLine($"{course.Id}");
+               _consoleManager.WriteLine($"{course.Name}");
+            }
+
+            HomeworkResult homeworkResult = new HomeworkResult()
+            {
+                NameHomework = _cliHelper.GetString("get course name"),
+                CourseId = _cliHelper.GetInt("Get course Id"),
+                StudentId = _cliHelper.GetInt("Get student Id"),
+                ReturnDate = _cliHelper.GetValidDateTime("Get date of return homework"),
+                Result = _cliHelper.GetInt("Get homework result "),
+            };
+
+            var addingSuccess = await _coursesClient.AddHomeworkResult(homeworkResult);
+            if (addingSuccess)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

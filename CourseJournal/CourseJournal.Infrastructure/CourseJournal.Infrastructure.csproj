@@ -46,12 +46,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CoursesRepository.cs" />
+    <Compile Include="HomeworksResultsRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TrainersRepository.cs" />
     <Compile Include="StudentsRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="SQL\01. Database creation.sql" />
+    <Content Include="SQL\02. HomeworksResults table creation.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

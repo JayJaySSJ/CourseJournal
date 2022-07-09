@@ -44,8 +44,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HomeworksResultsService.cs" />
+    <Compile Include="Interfaces\IHomeworksResultsRpository.cs" />
     <Compile Include="Interfaces\IStudentsRepository.cs" />
     <Compile Include="Interfaces\ITrainersRepository.cs" />
+    <Compile Include="Models\HomeworkResult.cs" />
     <Compile Include="Models\Trainer.cs" />
     <Compile Include="CoursesService.cs" />
     <Compile Include="DateProvider.cs" />

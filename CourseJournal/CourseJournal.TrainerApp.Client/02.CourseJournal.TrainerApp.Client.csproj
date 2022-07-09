@@ -54,6 +54,7 @@
     <Compile Include="ConsoleManager.cs" />
     <Compile Include="CoursesHandler.cs" />
     <Compile Include="Models\Course.cs" />
+    <Compile Include="Models\HomeworkResult.cs" />
     <Compile Include="Models\Student.cs" />
     <Compile Include="Models\Trainer.cs" />
     <Compile Include="Program.cs" />

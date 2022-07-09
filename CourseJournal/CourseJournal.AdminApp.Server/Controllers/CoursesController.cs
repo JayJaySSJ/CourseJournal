@@ -11,10 +11,12 @@ namespace CourseJournal.AdminApp.Server.Controllers
     public class CoursesController : ApiController
     {
         private readonly ICoursesService _coursesService;
+        private readonly IHomeworksResultsService _homeworksResultsService;
 
-         public CoursesController()
+        public CoursesController()
         {
             _coursesService = new CoursesService(new CoursesRepository());
+            _homeworksResultsService = new HomeworksResultsService(new HomeworksResultsRepository());
         }
 
         [HttpPost]
@@ -24,5 +26,11 @@ namespace CourseJournal.AdminApp.Server.Controllers
         [HttpGet]
         [Route("")]
         public async Task<List<Course>> GetAllAsync() => await _coursesService.GetAllAsync();
+
+
+        [HttpPost]
+        [Route("addresulthomework")]
+        public async Task<bool> AddResultHomeworkAsync([FromBody] HomeworkResult homeworkResult) => await _homeworksResultsService.AddHomeworkResult(homeworkResult);
     }
+
 }
